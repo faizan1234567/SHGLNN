@@ -2,3 +2,10 @@ pandas
 numpy
 matplotlib
 scipy
+torch
+networkx
+torch_geometric
+torch_scatter
+torch_sparse
+torch_cluster
+torch_spline_conv -f https://data.pyg.org/whl/torch-2.0.0+cpu.html
