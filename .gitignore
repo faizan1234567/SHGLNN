@@ -1,0 +1,7 @@
+graph/
+*.pdf
+*.csv
+*.pth
+*.pt
+*.docx
+__pychache__/
