@@ -87,15 +87,27 @@ def generate_kmatrix(initial_k_matrix,
                      spl,
                      k_hops = None):
     kmatrix = initial_k_matrix
+    adjancy_matrix = initial_k_matrix
     if k_hops is not None:
         for i, row in enumerate(unique_nodes):
             for j, col in enumerate(unique_nodes):
                 length = calculateLength(row, col, spl)
                 if length <= k_hops and length != 0:
+                    adjancy_matrix[i, j] = 1
+                else:
+                    adjancy_matrix[i, j] = 0
+
+        node_degree = np.sum(adjancy_matrix, axis =1)
+        avg_degree = np.sum(node_degree)/len(unique_nodes)
+        print(avg_degree)
+        for i, row in enumerate(unique_nodes):
+            for j, col in enumerate(unique_nodes):
+                degree = calculateLength(row, col, spl)
+                if degree >= avg_degree and degree != 0:
                     kmatrix[i, j] = 1
                 else:
                     kmatrix[i, j] = 0
-    return kmatrix
+    return kmatrix, adjancy_matrix
 
 if __name__ == "__main__":
     args = read_args()
@@ -105,9 +117,10 @@ if __name__ == "__main__":
     first_graph = data[args.graph_index]
     src_nodes, target_nodes = get_src_target_nodes(first_graph)
     spl, kmatrix, unique_nodes = create_graph(first_graph, src_nodes, target_nodes)
-    kmatrix = generate_kmatrix(kmatrix, unique_nodes, spl, args.khops)
+    kmatrix, adjancy_matrix = generate_kmatrix(kmatrix, unique_nodes, spl, args.khops)
     print(f"K matrix generated: \n{kmatrix}")
     print(f'K matrix shape: {kmatrix.shape}')
+    print(f'is adjancy matrix and K matrix equal: \n{kmatrix == adjancy_matrix}')
 
 
 
