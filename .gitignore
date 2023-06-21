@@ -5,3 +5,4 @@ graph/
 *.pt
 *.docx
 __pychache__/
+datasets/
