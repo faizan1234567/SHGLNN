@@ -6,3 +6,4 @@ graph/
 *.docx
 __pychache__/
 datasets/
+__pycache__/
