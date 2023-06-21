@@ -14,7 +14,16 @@ import numpy as np
 import torch_geometric
 from get_dataset import Dataset
 import networkx as nx
+import argparse
 
+
+def read_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--name", type = str, default = "MUTAG", help = "the dataset name")
+    parser.add_argument("--khops", type = int, default = 2, help = "K hope value for generating k matrix")
+    parser.add_argument("--graph_index", type = int, default = 0, help = "sub graph index")
+    opt = parser.parse_args()
+    return opt
 
 def tensor_to_list(tensor):
     '''
@@ -90,13 +99,14 @@ def generate_kmatrix(initial_k_matrix,
     return kmatrix
 
 if __name__ == "__main__":
-    NAME = "mutag".upper()
+    args = read_args()
+    NAME = args.name.upper()
     dataset = Dataset(f"{NAME}", save_dir= f"../datasets/{NAME}")
     data = dataset.return_dataset()
-    first_graph = data[0]
+    first_graph = data[args.graph_index]
     src_nodes, target_nodes = get_src_target_nodes(first_graph)
     spl, new_graph, kmatrix = create_graph(first_graph, src_nodes, target_nodes)
-    kmatrix = generate_kmatrix(kmatrix, src_nodes, target_nodes, spl, 2)
+    kmatrix = generate_kmatrix(kmatrix, src_nodes, target_nodes, spl, args.khops)
     print(f"K matrix generated: {kmatrix}")
     print(f'K matrix shape: {kmatrix.shape}')
 
