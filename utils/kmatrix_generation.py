@@ -65,14 +65,14 @@ def create_graph(graph, source_nodes, target_nodes):
     k_matrix: np.ndarray
     """
     unique_nodes = list(np.unique(graph["edge_index"]))
-    num_nodes = len(source_nodes)
+    num_nodes = len(unique_nodes)
     k_matrix = np.zeros((num_nodes, num_nodes))
     new_graph = nx.Graph()
     new_graph.add_nodes_from(unique_nodes)
     edge_info = list(zip(source_nodes, target_nodes))
     new_graph.add_edges_from(edge_info)
     spl = dict(nx.all_pairs_shortest_path_length(new_graph))
-    return spl, new_graph, k_matrix
+    return spl, k_matrix, unique_nodes
 
 
 def calculateLength(a, b, spl):
@@ -83,14 +83,13 @@ def calculateLength(a, b, spl):
 
 
 def generate_kmatrix(initial_k_matrix,
-                     source_nodes,
-                     target_nodes,
+                     unique_nodes,
                      spl,
                      k_hops = None):
     kmatrix = initial_k_matrix
     if k_hops is not None:
-        for i, row in enumerate(source_nodes):
-            for j, col in enumerate(target_nodes):
+        for i, row in enumerate(unique_nodes):
+            for j, col in enumerate(unique_nodes):
                 length = calculateLength(row, col, spl)
                 if length <= k_hops and length != 0:
                     kmatrix[i, j] = 1
@@ -105,9 +104,9 @@ if __name__ == "__main__":
     data = dataset.return_dataset()
     first_graph = data[args.graph_index]
     src_nodes, target_nodes = get_src_target_nodes(first_graph)
-    spl, new_graph, kmatrix = create_graph(first_graph, src_nodes, target_nodes)
-    kmatrix = generate_kmatrix(kmatrix, src_nodes, target_nodes, spl, args.khops)
-    print(f"K matrix generated: {kmatrix}")
+    spl, kmatrix, unique_nodes = create_graph(first_graph, src_nodes, target_nodes)
+    kmatrix = generate_kmatrix(kmatrix, unique_nodes, spl, args.khops)
+    print(f"K matrix generated: \n{kmatrix}")
     print(f'K matrix shape: {kmatrix.shape}')
 
 
