@@ -42,11 +42,11 @@ def generate_s_matrix(name, save):
                     if width >= nodes:
                         width = 0
                     if np.array_equal(query_node_encoding.numpy(), value_node_encoding.numpy()):
-                        print(height, width)
+                        # print(height, width)
                         S_matrix[height, width] = 1
                     else:
                         print(height, width)
-                        S_matrix[height, width] = 0
+                        # S_matrix[height, width] = 0
     return S_matrix
 
 
