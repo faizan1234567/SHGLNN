@@ -5,6 +5,7 @@ scipy
 torch
 networkx
 torch_geometric
+hypernetx
 
 # optional dependencies ...
 # torch_scatter

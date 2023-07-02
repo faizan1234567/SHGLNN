@@ -82,11 +82,25 @@ def calculateLength(a, b, spl):
         return 0
 
 
+def save_data_csv(K, nodes_list):
+    '''convert to graph data to a csv file for graph generation
+    Args: K (numpy array of graph relations) 2708x2708
+          nodes_list: (list) of nodes
+    '''
+    Kmatrix = {}
+    for i, cols in enumerate(nodes_list):
+        Kmatrix[f"{cols}"] = K[:, i].tolist()
+
+    graph_data = pd.DataFrame(Kmatrix, index=nodes_list)
+    graph_data.to_csv("grah_data.csv", sep='\t')
+
+
 def generate_kmatrix(initial_k_matrix,
                      unique_nodes,
                      spl,
                      k_hops = None):
     kmatrix = initial_k_matrix
+    unique_nodes.sort()
     if k_hops is not None:
         for i, row in enumerate(unique_nodes):
             for j, col in enumerate(unique_nodes):
@@ -95,6 +109,8 @@ def generate_kmatrix(initial_k_matrix,
                     kmatrix[i, j] = 1
                 else:
                     kmatrix[i, j] = 0
+    # saving the k matrix into a csv file...
+    save_data_csv(kmatrix, unique_nodes)
     return kmatrix
 
 if __name__ == "__main__":
