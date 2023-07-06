@@ -2,14 +2,17 @@ graph/
 *.pdf
 *.csv
 *.xml
+*.json
+*.pyc
 *.pth
 *.pt
 *.docx
 # __pychache__/
 datasets/
-tracked/HyperNetX/
+HyperNetX/
 raw/
 .idea/
+
 
 
 

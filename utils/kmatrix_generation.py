@@ -91,8 +91,10 @@ def save_data_csv(K, nodes_list):
     for i, cols in enumerate(nodes_list):
         Kmatrix[f"{cols}"] = K[:, i].tolist()
 
-    graph_data = pd.DataFrame(Kmatrix, index=nodes_list)
-    graph_data.to_csv("grah_data.csv", sep='\t')
+    graph_data = pd.DataFrame(Kmatrix)
+    drop_col = graph_data.columns.tolist()[0]
+    graph_data = graph_data.drop(drop_col, axis=1)
+    graph_data.to_csv("grah_data.csv", sep=',')
 
 
 def generate_kmatrix(initial_k_matrix,

@@ -21,15 +21,17 @@ def graph_data(grah_data):
     return: graph connnection dictionary
     """
     graph_connection = {}
-    rows = grah_data.iloc[:, 0].tolist()
+    drop_col = grah_data.columns.tolist()[0]
+    grah_data = grah_data.drop(drop_col, axis=1)
     cols = grah_data.columns.tolist()
-    del cols[0]
+    rows = grah_data.index.tolist()
+    cols = [int(entry)  for entry in cols]
     # interate over rows
     for i, row in enumerate(rows):
         record = []
-        record.append(row)
+        # record.append(row)
         for j, col in enumerate(cols):
-            if grah_data.iloc[i, j] == 1:
+            if grah_data.iloc[i, j] == 1.0:
                 record.append(int(col))
             else:
                 pass
@@ -57,7 +59,7 @@ def main():
         print("done!!!")
         print(graph_connection)
         if args.draw_detail:
-            # hnx.draw(H)
+            hnx.draw(H)
             print(f"number of nodes: {len(H.nodes)}")
             print(f"number of edges: {len(H.edges)}")
         print('finished.!!')
