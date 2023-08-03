@@ -57,7 +57,7 @@ def main():
         print("generating hypergraph now...")
         H = hnx.Hypergraph(graph_connection)
         print("done!!!")
-        print(graph_connection)
+        # print(graph_connection)
         if args.draw_detail:
             hnx.draw(H)
             print(f"number of nodes: {len(H.nodes)}")
