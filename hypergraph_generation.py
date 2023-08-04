@@ -42,6 +42,9 @@ def graph_data(grah_data):
         len_ = len(graph_connection[key])
         if len_ == 1:
             del graph_connection[key]
+    # add E0 connection to other nodes links since it has not been updated.
+    for item in graph_connection["E0"]:
+        graph_connection[f"E{item}"].insert(0, 0)
     return graph_connection
 
 
@@ -53,7 +56,10 @@ def main():
         print("generating graph connection dictionary!!")
         graph_connection = graph_data(g_data)
         print('done!!!\n')
-
+        print()
+        print(f'Graph connection: \n')
+        print(graph_connection)
+        print()
         print("generating hypergraph now...")
         H = hnx.Hypergraph(graph_connection)
         print("done!!!")
