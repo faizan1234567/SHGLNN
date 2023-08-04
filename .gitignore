@@ -7,7 +7,7 @@ graph/
 *.pth
 *.pt
 *.docx
-# __pychache__/
+__pychache__/
 datasets/
 HyperNetX/
 raw/
